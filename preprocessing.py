@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-
 
 def read_csv(dataset):
 
     df = pd.read_csv(dataset)
     return df
 
+## MC 240629
+## - add type hinting to function arguments + return values; and, be sure you're returning values
 def impute_with_medians(df):
     for column in df.columns[:-1]:
         if df[column].dtype in [np.float64, np.int64]:
