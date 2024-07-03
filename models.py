@@ -14,18 +14,18 @@ def split_data(X: np.ndarray, y: np.ndarray, test_size: float) -> tuple:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=21)
     return X_train, X_test, y_train, y_test
 
-def random_forest_classifier(X_train: np.ndarray,y_train: np.ndarray) -> tuple:
+def random_forest_classifier(X_train: np.ndarray,y_train: np.ndarray) -> RandomForestClassifier:
     rf_clf = RandomForestClassifier(random_state=21)
     rf_clf.fit(X_train, y_train)
     return rf_clf
 
-def logistic_regression(X_train: np.ndarray,y_train: np.ndarray)-> tuple:
+def logistic_regression(X_train: np.ndarray,y_train: np.ndarray)-> LogisticRegression:
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, y_train)
     return model
 
 
-def support_vector_machines(X_train: np.ndarray, X_test: np.ndarray, y_train: np.ndarray, y_test: np.ndarray)-> tuple:
+def support_vector_machines(X_train: np.ndarray, X_test: np.ndarray, y_train: np.ndarray, y_test: np.ndarray)-> SVC:
     sc = StandardScaler()
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
@@ -56,11 +56,13 @@ def k_fold_cross_validation(X: np.ndarray,y: np.ndarray):
         print(f'Fold:{cnt}, Train set: {len(train_index)}, Test set: {len(test_index)}')
         cnt+=1
 
-    score = cross_val_score(RandomForestClassifier(random_state= 42), X, y, cv= kf, scoring="accuracy")
-    print(f'Scores for each fold are: {score}')
-    print(f'Average score Random Forest Classifier: {"{:.2f}".format(score.mean())}')
+    score1 = cross_val_score(RandomForestClassifier(random_state= 42), X, y, cv= kf, scoring="accuracy")
+    print(f'Scores for each fold are: {score1}')
+    print(f'Average score Random Forest Classifier: {"{:.2f}".format(score1.mean())}')
 
-    score = cross_val_score(SVC(random_state=42), X, y, cv=kf, scoring="accuracy")
+    score2 = cross_val_score(SVC(random_state=42), X, y, cv=kf, scoring="accuracy")
 
-    print(f'Scores for each fold are: {score}')
-    print(f'Average score SVM: {"{:.2f}".format(score.mean())}')
+    print(f'Scores for each fold are: {score2}')
+    print(f'Average score SVM: {"{:.2f}".format(score2.mean())}')
+    
+    return score1, score2
