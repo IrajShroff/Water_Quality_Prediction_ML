@@ -12,7 +12,7 @@ def impute_with_medians(df)-> pd.DataFrame:
             df[column] = df[column].fillna(df[column].median())
     return df
 
-def set_variables(df) -> np.ndarray:
+def set_variables(df) -> tuple[np.ndarray]:
     X = df.iloc[:, :-1].values #capital X matrix snd lower case y vector
     y = df.iloc[:, -1].values #values turns it into numpy array
     
